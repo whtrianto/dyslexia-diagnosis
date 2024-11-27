@@ -1,2 +1,1 @@
-# disleksia
-disleksia
+Dibuat oleh Wahyu Trianto
