@@ -1,5 +1,4 @@
 <?php include 'header.php'; ?>
-<br><br>
 <!-- Hero Section -->
 <section class="container hero-section1 bg4 text-justify text-dar">
     <h1 class="text-center text-lig">Apa Itu Disleksia?</h1>
@@ -12,52 +11,80 @@
     <p>
         Dengan diagnosis yang tepat dan strategi belajar yang efektif, individu dengan disleksia dapat mengembangkan keterampilan membaca dan menulis yang baik, serta sukses dalam kehidupan akademis dan profesional mereka.
     </p>
+    <br>
+    <div class="text-center">
+        <a href="diagnosa.php" class="btn btn-cta">Cek Sekarang</a>
+    </div>
 </section>
 
 <!-- Main Content -->
 <div class="container">
-    <div class="row text-center text-dar">
-        <div class="col-md-4 mb-4">
-            <a href="tulisan.php" style="text-decoration: none;">
-                <div class="feature-card">
-                    <img src="icon/font.svg" alt="Dysgraphi">
-                    <h4 class="text-lig">Dysgraphi</h4>
-                    <h4 class="text-lig">(Bentuk Tulisan)</h4>
-                    <p class="text-dark">
-                        Gangguan neurologis yang memengaruhi kemampuan seseorang untuk menulis dengan jelas.
-                    </p>
-                </div>
-            </a>
-        </div>
-        <!-- Feature 1 -->
-        <div class="col-md-4 mb-4">
-            <a href="penglihatan.php" style="text-decoration: none;">
-                <div class="feature-card">
-                    <img src="icon/eye.svg" alt="Visual">
-                    <h4 class="text-lig">Dyslexia Visual</h4>
-                    <h4 class="text-lig">(Penglihatan)</h4>
-                    <p class="text-dark">
-                        Gangguan belajar yang memengaruhi kemampuan seseorang untuk memproses informasi visual.
-                    </p>
-                </div>
-            </a>
-        </div>
-        <!-- Feature 2 -->
-        <div class="col-md-4 mb-4">
-            <a href="pendengaran.php" style="text-decoration: none;">
-                <div class="feature-card">
-                    <img src="icon/ear.svg" alt="Auditoris">
-                    <h4 class="text-lig">Dyslexia Auditoris</h4>
-                    <h4 class="text-lig">(Pendengaran)</h4>
-                    <p class="text-dark">
-                        Gangguan belajar yang memengaruhi kemampuan seseorang untuk memproses suara atau informasi yang diterima melalui pendengaran.
-                    </p>
-                </div>
-            </a>
-        </div>
-        <!-- Feature 3 -->
+    <div class="row text-center text-dar d-flex justify-content-center">
+        <?php include 'koneksi.php'; ?>
+        <?php
+        // cek db penyakit
+        $qry = "SELECT * FROM tb_penyakit";
+        $data = mysqli_query($kon, $qry);
+        // agar berlaku berulangan sebanyak data yg ada di tb_gejala
+        while ($d = mysqli_fetch_array($data)) {
+        ?>
+            <div class="col-md-4 mb-4">
+                <a href="<?= $d['link'] ?>.php" style="text-decoration: none;">
+                    <div class="feature-card">
+                        <img src="icon/<?= $d['link'] ?>.svg" alt="<?= $d['penyakit'] ?>">
+                        <h4 class="text-lig"><?= $d['penyakit'] ?></h4>
+                        <p class="text-dark">
+                            <?= $d['definisi'] ?>
+                        </p>
+                    </div>
+                </a>
+            </div>
+        <?php
+        }
+        ?>
     </div>
 </div>
 </div>
 
 <?php include 'footer.php'; ?>
+<style>
+    .btn-cta {
+        font-size: 1.3rem;
+        padding: 16px 40px;
+        border-radius: 30px;
+        background: linear-gradient(90deg, rgb(60, 50, 31) 0%, #908872 100%);
+        color: #fff !important;
+        font-weight: bold;
+        box-shadow: 0 4px 16px rgba(140, 120, 80, 0.15);
+        border: none;
+        transition: all 0.2s;
+        letter-spacing: 1px;
+    }
+
+    .btn-cta:hover,
+    .btn-cta:focus {
+        background: linear-gradient(90deg, #908872 0%, #bca970 100%);
+        color: #fff !important;
+        transform: translateY(-2px) scale(1.04);
+        box-shadow: 0 8px 24px rgba(140, 120, 80, 0.18);
+        text-decoration: none;
+    }
+
+    .btn-cta-group {
+        display: flex;
+        justify-content: center;
+        gap: 32px;
+        margin: 60px 0 40px 0;
+        flex-wrap: wrap;
+    }
+
+    .spacer-bottom {
+        height: 80px !important;
+    }
+
+    .container,
+    .page-content,
+    .main-content {
+        margin-bottom: 80px !important;
+    }
+</style>
