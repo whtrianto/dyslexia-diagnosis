@@ -1,0 +1,442 @@
+
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background: url('../image/bg11.jpg') no-repeat center center fixed;
+      /* Gambar latar belakang */
+      background-size: cover;
+      /* Memastikan gambar menutupi seluruh layar */
+      color: #333;
+      scroll-behavior: smooth;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding-top: 80px; /* Padding untuk navbar fixed-top */
+      padding-bottom: 60px; /* Padding untuk footer */
+    }
+    
+    main {
+      flex: 1;
+    }
+    
+    /* Container untuk konten utama */
+    .container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .container {
+      flex: 1;
+    }
+    .form-check-label {
+      font-size: 20px; /* Perbesar ukuran teks */
+  }
+  
+  .btn-group-toggle .btn {
+    font-size: 14px; /* Menyesuaikan ukuran teks tombol */
+    width: 120px; /* Lebar tombol lebih kecil */
+    text-align: center;
+    border-radius: 6px; /* Menambahkan sedikit radius agar tombol lebih halus */
+}
+
+.btn-group-toggle .btn:hover {
+    opacity: 0.9;
+}
+
+.form-check {
+    margin-bottom: 25px; /* Memberikan jarak lebih antara gejala dan tombol */
+}
+
+
+  .form-check-input {
+      width: 20px; /* Perbesar ukuran kotak checkbox */
+      height: 20px;
+  }
+  
+
+  
+    .navbar-brand {
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    .navbar-brand:hover {
+      color: #aca087 !important;
+      transform: translateY(-3px);
+    }
+    .foot {
+      transition: all 0.3s ease;
+    }
+
+    .foot:hover {
+      color: #bbb3a5 !important;
+      transform: translateY(-3px);
+    }
+    .text-lig{
+      font-weight: bold;
+      color: #3B2F2F;
+    }
+    li{
+      font-size: large;
+    }
+    .text-dar{
+      font-weight: bold;
+      color: #574f45;
+    }
+    .navbar {
+      background-color: #3B2F2F;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .navbar-brand,
+    .navbar h4 {
+      color: #ecf0f1 !important;
+    }
+    .shs{
+        min-height: calc(100vh - 100px); /* Penyesuaian untuk tinggi header/footer */
+    }
+
+    .navbar-brand img {
+      width: 30px;
+      height: 30px;
+    }
+
+    .content {
+      flex: 1;
+      padding: 50px 15px;
+    }
+
+    .custom-btn {
+      background-color: #d7cdb6;
+      color: #3B2F2F;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    .custom-btn:hover {
+      background-color: #6F4C3E;
+      color: #3B2F2F;
+      transform: translateY(-3px);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+
+    .hero-section {
+      background: linear-gradient(to left bottom, rgba(218, 215, 208, 0.8), rgba(174, 154, 114, 0.8)), url('../image/bghome.png') no-repeat center center;
+      background-size: cover;
+      padding: 80px 20px;
+      color: dark;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      margin-bottom: 30px;
+    }
+
+    .hero-section h1 {
+      font-size: 2.5em;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    .hero-section p {
+      font-size: 1.2em;
+      line-height: 1.8;
+    }
+
+    .pan{
+      background: linear-gradient(to right top, rgba(174, 154, 114, 0.8), rgba(218, 215, 208, 0.8)), url('../image/bg1.jpeg') no-repeat center center;
+    }
+    .bg2{
+      background: linear-gradient(to right top, rgba(174, 154, 114, 0.8), rgba(218, 215, 208, 0.8)), url('../image/visual.png') no-repeat center center;
+    }
+    .bg4{
+      background: linear-gradient(to right top, rgba(174, 154, 114, 0.8), rgba(218, 215, 208, 0.8)), url('../image/bg1.jpeg') no-repeat center center;
+    }
+    .abc{
+      background: linear-gradient(to right top, rgba(174, 154, 114, 0.8), rgba(218, 215, 208, 0.8)), url('../image/dis.png') no-repeat center center;
+    }
+
+    .sin{
+      background: linear-gradient(to right top, rgba(174, 154, 114, 0.8), rgba(218, 215, 208, 0.8)), url('../image/sin.jpg') no-repeat center center;
+    }
+
+    .fono{
+      background: linear-gradient(to right top, rgba(174, 154, 114, 0.8), rgba(218, 215, 208, 0.8)), url('../image/fonologi.jpg') no-repeat center center;
+    }
+
+    .gab{
+      background: linear-gradient(to right top, rgba(174, 154, 114, 0.8), rgba(218, 215, 208, 0.8)), url('../image/gab.jpg') no-repeat center center;
+    }
+
+    .arit{
+      background: linear-gradient(to right top, rgba(174, 154, 114, 0.8), rgba(218, 215, 208, 0.8)), url('../image/arit.jpg') no-repeat center center;
+    }
+
+    .hero-section1 {
+      background-size: cover;
+      padding: 80px 20px;
+      color: dark;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      margin-bottom: 30px;
+    }
+
+    .hero-section1 h1 {
+      font-size: 2.5em;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    .hero-section1 p {
+      font-size: 1.2em;
+      line-height: 1.8;
+    }
+
+    .btnn {
+      background-color: #d7cdb6;
+      color: #3B2F2F;
+      padding: 5px 20px;
+      font-size: 1.2em;
+      font-weight: bold;
+      border-radius: 30px;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+    }
+
+    /* Hover effect */
+    .btnn:hover {
+      background-color: #b39e70;
+      color: #3B2F2F;
+      transform: translateY(-3px);
+      /* Optional hover effect */
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      /* Adds a shadow effect on hover */
+    }
+
+    .btn-cta {
+      color: #fff;
+      padding: 12px 30px;
+      font-size: 1.2em;
+      font-weight: bold;
+      border-radius: 30px;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+      background-color: #6F4C3E;
+    }
+
+    .btn-cta:hover {
+      background-color: #5B3A29;
+      color: #fff;
+      transform: translateY(-3px);
+    }
+
+    .features-section {
+      margin: 50px 0;
+    }
+
+    .features-section1 {
+      margin: 50px 0;
+    }
+
+    .feature-card {
+      background: linear-gradient(to right top, rgba(174, 154, 114, 0.9), rgba(218, 215, 208, 0.9));
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .feature-card img {
+      max-width: 80px;
+      margin-bottom: 20px;
+    }
+
+    .feature-card h4 {
+      font-size: 1.4em;
+      font-weight: bold;
+    }
+
+    .feature-card p {
+      font-size: 1em;
+      color: #7f8c8d;
+    }
+
+    footer {
+      background-color: #3B2F2F;
+      /* Darker Blue */
+      color: #ecf0f1;
+      /* Light Grey */
+      padding: 30px 20px;
+      font-size: 1.2em;
+      /* Bigger font size in footer */
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      flex-shrink: 0;
+    }
+
+    footer .left-text,
+    footer .right-text {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    footer .left-text {
+      left: 20px;
+    }
+
+    footer .right-text {
+      right: 20px;
+    }
+
+    /* Animasi masuk dari bawah */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Kelas awal */
+.feature-card {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s ease-out;
+}
+
+/* Kelas saat animasi dijalankan */
+.feature-card.animate {
+  animation: fadeUp 0.8s forwards;
+}
+
+/* Awal animasi untuk section */
+.hero-section {
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: all 0.8s ease-out;
+}
+
+/* Aktifkan animasi */
+.hero-section.animate {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+    /* Responsiveness */
+    @media (max-width: 768px) {
+      .navbar h4 {
+        font-size: 1.2em;
+        text-align: center;
+      }
+
+      .navbar-brand {
+        text-align: justify;
+      }
+
+      .hp {
+        font-size: 1.2em;
+        font-weight: bold;
+      }
+
+      .btnn {
+        background-color: #d7cdb6;
+        color: #3B2F2F;
+        padding: 5px 20px;
+        font-size: 0.8em;
+        font-weight: bold;
+        border-radius: 30px;
+        text-transform: uppercase;
+        transition: all 0.3s ease;
+      }
+
+      .hero-section {
+        text-align: center;
+        padding: 50px 20px;
+      }
+
+      .hero-section1 {
+        text-align: center;
+        padding: 50px 20px;
+      }
+
+      
+
+/* Untuk section */
+.hero-section1 {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease;
+}
+.hero-section1.animate {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Untuk setiap elemen dalam section */
+.fade-item {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s ease;
+}
+.fade-item.animate {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Untuk kartu fitur */
+.feature-card {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s ease;
+}
+.feature-card.animate {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+
+      footer .left-text,
+      footer .right-text {
+        position: static;
+        text-align: center;
+        margin: 10px 0;
+        transform: none;
+      }
+
+      footer {
+        text-align: center;
+        padding: 20px;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        flex-shrink: 0;
+      }
+
+      .content {
+        padding: 15px 10px;
+      }
+    }
