@@ -28,6 +28,21 @@ $link = $_SESSION["link"];
 $certainty_factors = $_SESSION["certainty_factors"];
 $best_cf = $_SESSION["best_cf"];
 
+// Ambil admin tujuan dari diagnosis terakhir user
+$admin_name = '-';
+include 'koneksi.php';
+$qry_admin = "SELECT assigned_admin FROM tb_diagnosa_siswa WHERE nama='" . mysqli_real_escape_string($kon, $nama) . "' AND umur='" . mysqli_real_escape_string($kon, $umur) . "' ORDER BY tanggal_diagnosa DESC LIMIT 1";
+$res_admin = mysqli_query($kon, $qry_admin);
+if ($row_admin = mysqli_fetch_assoc($res_admin)) {
+    $assigned_admin = $row_admin['assigned_admin'];
+    if (!empty($assigned_admin)) {
+        $qadmin = mysqli_query($kon, "SELECT role, toko FROM login WHERE userid='" . mysqli_real_escape_string($kon, $assigned_admin) . "'");
+        if ($a = mysqli_fetch_assoc($qadmin)) {
+            $admin_name = "[" . $a['role'] . "]" . " " . $a['toko'];
+        }
+    }
+}
+
 // Ambil daftar gejala yang dipilih dari database jika tersedia di session
 $gejala_dipilih = '';
 if (isset($_SESSION['gejala_dipilih'])) {
@@ -73,7 +88,7 @@ if (!empty($gejala_dipilih)) {
 // Siapkan tabel gejala untuk HTML
 $html_gejala = '';
 if (!empty($daftar_gejala)) {
-    $html_gejala = "<div class='form-group'><label>Gejala yang Dipilih:</label><ul style='padding-left:18px;'>";
+    $html_gejala = "<div class='form-group'><label style='font-size:12px;'>Gejala yang Dipilih:</label><ul style='padding-left:18px;'>";
     foreach ($daftar_gejala as $g) {
         $html_gejala .= "<li>" . htmlspecialchars($g) . "</li>";
     }
@@ -87,7 +102,7 @@ if (!empty($certainty_factors)) {
     $jenis_diagnosa = isset($jenis_diagnosa) ? $jenis_diagnosa : 'disleksia';
     $tabel_penyakit = $jenis_diagnosa == 'disgrafia' ? '1_tb_penyakit' : 'tb_penyakit';
     $max_cf = max($certainty_factors);
-    $html_cf = "<div class='form-group'><label>Hasil CF Lainnya:</label><table border='1' cellpadding='5' cellspacing='0' width='100%'><tr><th>Jenis " . ucfirst($jenis_diagnosa) . "</th><th>Certainty Factor (%)</th></tr>";
+    $html_cf = "<div class='form-group'><label style='font-size:12px;'>Hasil CF Lainnya:</label><table border='1' cellpadding='5' cellspacing='0' width='100%'><tr><th>Jenis " . ucfirst($jenis_diagnosa) . "</th><th>Certainty Factor (%)</th></tr>";
     include 'koneksi.php';
     foreach ($certainty_factors as $id_penyakit => $cf_value) {
         $qry = "SELECT penyakit FROM $tabel_penyakit WHERE id = '" . mysqli_real_escape_string($kon, $id_penyakit) . "'";
@@ -181,7 +196,7 @@ $html = "
         .footer a { color: #888; text-decoration: none; }
         .footer a:hover { text-decoration: underline; color: #bca970; }
         .web { display: none; }
-        #nama, #umur, #penyakit {
+        #nama, #umur, #penyakit, #admin {
             height: 25px;
             font-size: 15px;
             font-weight: bold;
@@ -211,39 +226,40 @@ $html = "
     </style>
 </head>
 <body>
-    <div class='container'>
-        <h1>Hasil Identifikasi</h1>
-        <div class='form-group'>
-            <label for='nama'>Nama:</label>
-            <textarea class='form-control' id='nama' rows='1' style='font-family: 'Times New Roman', sans-serif;' readonly>$nama</textarea>
+    <div class='container' style='max-width:700px;margin:5px auto 5px auto;padding:8px 10px 6px 10px;background:#fff;border-radius:8px;box-shadow:0 2px 5px rgba(0,0,0,0.04);page-break-inside:avoid;'>
+        <h1 style='font-size:15px;margin-top:2px;margin-bottom:7px;text-align:center;'>Hasil Identifikasi</h1>
+        
+        <div class='form-group' style='margin-bottom:4px;'>
+            <label for='nama' style='font-size:11px;'>Nama:</label>
+            <textarea class='form-control' id='nama' rows='1' style='font-family:Times New Roman,serif;margin-bottom:2px;font-size:11px;height:14px;' readonly>$nama</textarea>
         </div>
-        <div class='form-group'>
-            <label for='umur'>Umur:</label>
-            <textarea class='form-control' id='umur' rows='1' style='font-family: 'Times New Roman', sans-serif;' readonly>" . ($umur !== '' ? $umur . ' tahun' : '') . "</textarea>
+        <div class='form-group' style='margin-bottom:4px;'>
+            <label for='umur' style='font-size:11px;'>Umur:</label>
+            <textarea class='form-control' id='umur' rows='1' style='font-family:Times New Roman,serif;margin-bottom:2px;font-size:11px;height:14px;' readonly>" . ($umur !== '' ? $umur . ' tahun' : '') . "</textarea>
         </div>
-        <div class='form-group'>
-            <label for='penyakit'>Identifikasi:</label>
-            <textarea class='form-control' id='penyakit' rows='1' style='font-family: 'Times New Roman', sans-serif;' readonly>$penyakit 
-            </textarea>
+        <div class='form-group' style='margin-bottom:4px;'>
+            <label for='penyakit' style='font-size:11px;'>Identifikasi:</label>
+            <textarea class='form-control' id='penyakit' rows='1' style='font-family:Times New Roman,serif;margin-bottom:2px;font-size:11px;height:14px;' readonly>$penyakit</textarea>
         </div>
-        <div class='form-group'>
-            <label for='definisi'>Definisi:</label>
-            <textarea class='form-control' id='definisi' rows='6' style='font-family: 'Times New Roman', sans-serif;' readonly>$definisi</textarea>
+        <div class='form-group' style='margin-bottom:4px;'>
+            <label for='definisi' style='font-size:11px;'>Definisi:</label>
+            <textarea class='form-control' id='definisi' rows='9' style='font-family:Times New Roman,serif;margin-bottom:2px;font-size:11px;min-height:80px;max-height:400px;' readonly>$definisi</textarea>
         </div>
-        <div class='page-break'></div>
-        <div class='form-group'>
-            <label for='penanganan'>Penanganan:</label>
-            <textarea class='form-control' id='penanganan' rows='10' style='font-family: 'Times New Roman', sans-serif;' readonly>$penanganan</textarea>
+        <div class='form-group' style='margin-bottom:4px;'>
+            <label for='penanganan' style='font-size:11px;'>Penanganan:</label>
+            <textarea class='form-control' id='penanganan' rows='11' style='font-family:Times New Roman,serif;margin-bottom:2px;font-size:11px;min-height:120px;max-height:400px;' readonly>$penanganan</textarea>
         </div>
     </div>
-    <div class='footer'>
-        &copy; 2025 SIABID | <a href='https://portofolio-wahyu-trianto.vercel.app'>Sistem Pakar Diagnosa Gangguan Belajar</a>
-    </div>
-    <div class='page-break'></div>
-    <div class='container'>
-        <h1>Detail Identifikasi</h1>
-        $html_gejala
-        $html_cf
+    <div class='container' style='max-width:700px;margin:5px auto 5px auto;padding:8px 10px 6px 10px;background:#fff;border-radius:8px;box-shadow:0 2px 5px rgba(0,0,0,0.04);page-break-inside:avoid;'>
+        <h1 style='font-size:13px;margin-top:2px;margin-bottom:7px;text-align:center;'>Detail Identifikasi</h1>
+        <div style='font-size:11px;'>
+            $html_gejala
+            $html_cf
+        </div>
+        <div class='form-group' style='margin-bottom:4px;'>
+            <label for='admin' style='font-size:11px;'>Data Tersimpan di:</label>
+            <p id='admin' rows='1' style='font-family:Times New Roman,serif;font-size:11px' readonly>$admin_name</p>
+        </div>
     </div>
     <div class='footer'>
         &copy; 2025 SIABID | <a href='https://portofolio-wahyu-trianto.vercel.app'>Sistem Pakar Diagnosa Gangguan Belajar</a>

@@ -5,6 +5,40 @@ if (session_status() === PHP_SESSION_NONE) {
 
 //session_start();
 include 'header.php';
+include 'koneksi.php';
+// Validasi data session hasil diagnosa
+if (
+	empty($_SESSION["penyakit"]) ||
+	!isset($_SESSION["certainty_factors"]) ||
+	!is_array($_SESSION["certainty_factors"]) ||
+	count($_SESSION["certainty_factors"]) == 0
+) {
+	echo "<div class='container my-5'><div class='alert alert-warning'>Data hasil diagnosa tidak ditemukan. Silakan lakukan diagnosa terlebih dahulu.</div></div>";
+	include 'footer.php';
+	exit;
+}
+// Ambil data hasil diagnosa dari session
+$penyakit = isset($_SESSION["penyakit"]) ? $_SESSION["penyakit"] : '';
+$definisi = isset($_SESSION["definisi"]) ? $_SESSION["definisi"] : '';
+$penanganan = isset($_SESSION["penanganan"]) ? $_SESSION["penanganan"] : '';
+$link = isset($_SESSION["link"]) ? $_SESSION["link"] : '';
+$best_cf = isset($_SESSION["best_cf"]) ? $_SESSION["best_cf"] : 0;
+// Ambil data diagnosa terakhir user ini (dalam 5 menit terakhir)
+$nama = mysqli_real_escape_string($kon, $_SESSION["nama"]);
+$umur = mysqli_real_escape_string($kon, $_SESSION["umur"]);
+$query = "SELECT assigned_admin FROM tb_diagnosa_siswa WHERE nama='$nama' AND umur='$umur' ORDER BY tanggal_diagnosa DESC LIMIT 1";
+$res = mysqli_query($kon, $query);
+$assigned_admin = null;
+$admin_name = '-';
+if ($row = mysqli_fetch_assoc($res)) {
+	$assigned_admin = $row['assigned_admin'];
+	if (!empty($assigned_admin)) {
+		$qadmin = mysqli_query($kon, "SELECT role, toko FROM login WHERE userid='" . mysqli_real_escape_string($kon, $assigned_admin) . "'");
+		if ($a = mysqli_fetch_assoc($qadmin)) {
+			$admin_name = "[" . $a['role'] . "]" . " " . $a['toko'];
+		}
+	}
+}
 ?>
 
 
@@ -73,6 +107,7 @@ include 'header.php';
 					$penyakit_info = "$penyakit (CF: $persen_cf%)";
 					?>
 
+
 					<!-- NAMA -->
 					<div class="form-group">
 						<label for="nama" class="font-weight-bold">NAMA:</label>
@@ -82,7 +117,12 @@ include 'header.php';
 					<!-- Umur -->
 					<div class="form-group">
 						<label for="umur" class="font-weight-bold">Umur:</label>
-						<textarea class="form-control" id="umur" rows="1" readonly><?php echo $_SESSION["umur"] !== '' ? $_SESSION["umur"] . ' tahun' : ''; ?></textarea>
+						<textarea class="form-control" id="umur" rows="1" readonly><?php
+																					$umur = isset($_SESSION["umur"]) ? trim($_SESSION["umur"]) : '';
+																					if ($umur !== '') {
+																						echo (stripos($umur, 'tahun') === false) ? $umur . ' tahun' : $umur;
+																					}
+																					?></textarea>
 					</div>
 
 					<!-- DIAGNOSA -->
@@ -140,7 +180,11 @@ include 'header.php';
 
 					</div>
 
-
+					<!-- ADMIN TUJUAN -->
+					<div class="form-group">
+						<label class="font-weight-bold">Data Tersimpan di:</label>
+						<textarea class="form-control" rows="1" readonly><?php echo $admin_name; ?></textarea>
+					</div>
 					<!-- Tombol Informasi Tambahan -->
 					<div class="form-group">
 						<a class="text-white" href="<?php echo $link; ?>.php" style="text-decoration: none;" target="_blank">

@@ -60,6 +60,33 @@
             info: false
         });
     </script>
+    <script>
+        $(document).ready(function() {
+            // Tampilkan overlay saat sidebar terbuka
+            function toggleOverlay() {
+                if ($('.page-wrapper').hasClass('toggled')) {
+                    $('.sidebar-overlay').show();
+                } else {
+                    $('.sidebar-overlay').hide();
+                }
+            }
+            // Inisialisasi
+            toggleOverlay();
+            // Toggle saat tombol sidebar
+            $('#show-sidebar, #close-sidebar').on('click', function() {
+                setTimeout(toggleOverlay, 10);
+            });
+            // Klik overlay menutup sidebar
+            $('.sidebar-overlay').on('click', function() {
+                $('.page-wrapper').removeClass('toggled');
+                toggleOverlay();
+            });
+            // Jika sidebar di-toggle dengan cara lain
+            $(document).on('classChange', '.page-wrapper', function() {
+                toggleOverlay();
+            });
+        });
+    </script>
     </body>
 
     </html>

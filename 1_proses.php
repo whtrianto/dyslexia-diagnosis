@@ -2,7 +2,8 @@
 include 'koneksi.php';
 session_start();
 
-if (isset($_POST['submit'])) {
+if (isset($_POST['nama'])) {
+	$assigned_admin = isset($_POST['assigned_admin']) ? intval($_POST['assigned_admin']) : null;
 	$selected_gejala = isset($_POST['gejala']) ? $_POST['gejala'] : [];
 	if (empty($selected_gejala)) {
 		$_SESSION["nama"] = htmlspecialchars($_POST["nama"]);
@@ -18,16 +19,16 @@ if (isset($_POST['submit'])) {
 		$jenis_diagnosa = 'disgrafia';
 		// Cek apakah data sudah ada (dalam 5 menit terakhir)
 		$query_check = "SELECT id FROM tb_diagnosa_siswa 
-                        WHERE nama = '$nama' 
-                        AND umur = '$umur'
-                        AND gejala_dipilih = '$gejala_dipilih' 
-                        AND hasil_diagnosa = '$hasil_diagnosa' 
-                        AND jenis_diagnosa = '$jenis_diagnosa'
-                        AND tanggal_diagnosa > DATE_SUB(NOW(), INTERVAL 5 MINUTE)";
+						WHERE nama = '$nama' 
+						AND umur = '$umur'
+						AND gejala_dipilih = '$gejala_dipilih' 
+						AND hasil_diagnosa = '$hasil_diagnosa' 
+						AND jenis_diagnosa = '$jenis_diagnosa'
+						AND tanggal_diagnosa > DATE_SUB(NOW(), INTERVAL 5 MINUTE)";
 		$result_check = mysqli_query($kon, $query_check);
 		if (mysqli_num_rows($result_check) == 0) {
-			$query_save = "INSERT INTO tb_diagnosa_siswa (nama, umur, gejala_dipilih, hasil_diagnosa, cf_tertinggi, cf_semua, jenis_diagnosa) 
-                           VALUES ('$nama', '$umur', '$gejala_dipilih', '$hasil_diagnosa', $cf_tertinggi, '$cf_semua', '$jenis_diagnosa')";
+			$query_save = "INSERT INTO tb_diagnosa_siswa (nama, umur, gejala_dipilih, hasil_diagnosa, cf_tertinggi, cf_semua, jenis_diagnosa, assigned_admin) 
+						   VALUES ('$nama', '$umur', '$gejala_dipilih', '$hasil_diagnosa', $cf_tertinggi, '$cf_semua', '$jenis_diagnosa', " . ($assigned_admin ? $assigned_admin : 'NULL') . ")";
 			mysqli_query($kon, $query_save);
 		}
 		$_SESSION["penyakit"] = 'Normal';
@@ -133,12 +134,16 @@ if (isset($_POST['submit'])) {
 			$result_check = mysqli_query($kon, $query_check);
 
 			if (mysqli_num_rows($result_check) == 0) {
-				$query_save = "INSERT INTO tb_diagnosa_siswa (nama, umur, gejala_dipilih, hasil_diagnosa, cf_tertinggi, cf_semua, jenis_diagnosa) 
-							   VALUES ('$nama', '$umur', '$gejala_dipilih', '$hasil_diagnosa', $cf_tertinggi, '$cf_semua', 'disgrafia')";
+				$query_save = "INSERT INTO tb_diagnosa_siswa (nama, umur, gejala_dipilih, hasil_diagnosa, cf_tertinggi, cf_semua, jenis_diagnosa, assigned_admin) 
+							   VALUES ('$nama', '$umur', '$gejala_dipilih', '$hasil_diagnosa', $cf_tertinggi, '$cf_semua', 'disgrafia', " . ($assigned_admin ? $assigned_admin : 'NULL') . ")";
 				mysqli_query($kon, $query_save);
 			}
 
 			include '1_hasil.php';
+		} else {
+			echo "<div class='container my-5'><div class='alert alert-danger'>Data penyakit tidak ditemukan. Silakan cek tabel 1_tb_penyakit di database.</div></div>";
+			include 'footer.php';
+			exit;
 		}
 	} else {
 		include 'error.php';

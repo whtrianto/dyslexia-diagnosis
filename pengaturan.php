@@ -1,4 +1,15 @@
-<?php include 'sidebar.php'; ?>
+<?php
+include 'sidebar.php';
+include 'koneksi.php';
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+$uid = $_SESSION['userid'];
+$DataLogin = mysqli_fetch_array(mysqli_query($kon, "SELECT * FROM login WHERE userid='$uid'"));
+$username = $DataLogin['username'];
+$toko = $DataLogin['toko'];
+$logo = isset($DataLogin['logo']) ? $DataLogin['logo'] : 'default_logo.png';
+?>
 <!-- isinya -->
 <?php
 if (isset($_POST['SimpanEdit'])) {
@@ -13,7 +24,7 @@ if (isset($_POST['SimpanEdit'])) {
         if ($cariuser) {
             $cekDataUpdate =  mysqli_query($kon, "UPDATE login SET username='$uname',
         toko='$ntoko'
-         WHERE userid='$uid'") or die(mysqli_konect_error());
+         WHERE userid='$uid'") or die(mysqli_connect_error());
             if ($cekDataUpdate) {
                 echo '<script>history.go(-1);</script>';
             } else {
@@ -39,7 +50,7 @@ if (isset($_POST['UpdatePass'])) {
 
             if (password_verify($pass2, $pass3)) {
                 $cekPass =  mysqli_query($kon, "UPDATE login SET password='$pass3'
-                    WHERE userid='$uid'") or die(mysqli_konect_error());
+                    WHERE userid='$uid'") or die(mysqli_connect_error());
                 if ($cekPass) {
                     echo '<script>alert("Password Berhasil di update");history.go(-1);</script>';
                 } else {
@@ -90,7 +101,7 @@ if (isset($_POST['UpdatePass'])) {
                     <div class="form-group row">
                         <label class="col-sm-4 col-md-4 col-lg-3 col-form-label" for="namatoko">Nama<span class="text-danger">*</span></label>
                         <div class="col-sm-8 col-md-7 col-lg-4">
-                            <input name="nama_toko" type="text" class="form-control" value="<?php echo $toko ?>" id="namatoko" placeholder="nama toko" required>
+                            <input name="nama_toko" type="text" class="form-control" value="<?php echo $toko ?>" id="namatoko" placeholder="nama sekolah" required>
                         </div>
                     </div>
                     <div class="form-group row">

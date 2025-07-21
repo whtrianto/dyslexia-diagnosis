@@ -11,10 +11,14 @@ function ribuan($nilai)
     return number_format($nilai, 0, ',', '.');
 }
 $uid = $_SESSION['userid'];
+// Ambil data superadmin saja untuk logo dan toko
+$DataSuperAdmin = mysqli_fetch_array(mysqli_query($kon, "SELECT * FROM login WHERE role='superadmin' LIMIT 1"));
+$logo = $DataSuperAdmin['logo'];
+$toko = $DataSuperAdmin['toko'];
+// Data login user tetap diambil untuk role dan username
 $DataLogin = mysqli_fetch_array(mysqli_query($kon, "SELECT * FROM login WHERE userid='$uid'"));
 $username = $DataLogin['username'];
-$toko = $DataLogin['toko'];
-$logo = $DataLogin['logo'];
+$role = $DataLogin['role'];
 ?>
 
 <a id="show-sidebar" class="btn btn-sm btn-dark border-0" href="#">
@@ -35,7 +39,7 @@ $logo = $DataLogin['logo'];
             <div class="user-info">
                 <span class="user-name"><?php echo $toko ?>
                 </span>
-                <span class="user-role">Admin</span>
+                <span class="user-role"><?php echo htmlspecialchars($username); ?> (<?php echo ($role == 'superadmin') ? 'Super Admin' : 'Admin'; ?>)</span>
                 <span class="user-status">
                     <i class="fa fa-circle"></i>
                     <span>Online</span>
@@ -46,52 +50,61 @@ $logo = $DataLogin['logo'];
 
         <div class="sidebar-menu">
             <ul>
-                <li class="header-menu">
-                    <span>Disleksia</span>
-                </li>
-                <li>
-                    <a href="editd.php">
-                        <i class="fa fa-brain"></i>
-                        <span>Data Disleksia</span>
-                    </a>
-                </li>
+                <?php if ($role == 'superadmin') { ?>
+                    <li class="header-menu">
+                        <span>Disleksia</span>
+                    </li>
+                    <li>
+                        <a href="editd.php">
+                            <i class="fa fa-brain"></i>
+                            <span>Data Disleksia</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="gejala.php">
+                            <i class="fa fa-clipboard"></i>
+                            <span>Gejala Disleksia</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="cf.php">
+                            <i class="fa fa-circle-info"></i>
+                            <span>CF Disleksia</span>
+                        </a>
+                    </li>
 
-                <li>
-                    <a href="gejala.php">
-                        <i class="fa fa-clipboard"></i>
-                        <span>Gejala Disleksia</span>
-                    </a>
-                </li>
+                    <li class="header-menu">
+                        <span>Disgrafia</span>
+                    </li>
+                    <li>
+                        <a href="editd1.php">
+                            <i class="fa fa-brain"></i>
+                            <span>Data Disgrafia</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="gejala1.php">
+                            <i class="fa fa-clipboard"></i>
+                            <span>Gejala Disgrafia</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="cf1.php">
+                            <i class="fa fa-circle-info"></i>
+                            <span>CF Disgrafia</span>
+                        </a>
+                    </li>
+                    <li class="header-menu">
+                        <span>Manajemen User</span>
+                    </li>
+                    <li>
+                        <a href="user_crud.php">
+                            <i class="fa fa-users"></i>
+                            <span>Kelola User</span>
+                        </a>
+                    </li>
 
-                <li>
-                    <a href="cf.php">
-                        <i class="fa fa-circle-info"></i>
-                        <span>CF Disleksia</span>
-                    </a>
-                </li>
-                <br>
-                <li class="header-menu">
-                    <span>Disgrafia</span>
-                </li>
-                <li>
-                    <a href="editd1.php">
-                        <i class="fa fa-brain"></i>
-                        <span>Data Disgrafia</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="gejala1.php">
-                        <i class="fa fa-clipboard"></i>
-                        <span>Gejala Disgrafia</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="cf1.php">
-                        <i class="fa fa-circle-info"></i>
-                        <span>CF Disgrafia</span>
-                    </a>
-                </li>
-                <br>
+                <?php } ?>
                 <li class="header-menu">
                     <span>Laporan</span>
                 </li>
@@ -101,7 +114,7 @@ $logo = $DataLogin['logo'];
                         <span>Rekap Data Siswa</span>
                     </a>
                 </li>
-                <br>
+
                 <li>
                     <a href="pengaturan.php">
                         <i class="fa fa-cog"></i>
@@ -119,8 +132,8 @@ $logo = $DataLogin['logo'];
         <!-- sidebar-menu  -->
     </div>
     <div class="sidebar-footer">
-        SIABID - <a target="_blank" rel="noopener noreferrer" href="https://ump.ac.id">
-            UMP</a>
+        <?php echo $toko ?> - <a target="_blank" rel="noopener noreferrer" href="https://zentrix-kreasi.vercel.app/">
+            Zentrix</a>
     </div>
 </nav>
 <!-- sidebar-wrapper  -->

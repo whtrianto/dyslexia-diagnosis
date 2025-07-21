@@ -1,5 +1,5 @@
 <?php include 'header.php'; ?>
-<br><br>
+
 <section class="container hero-section text-justify text-dar">
     <h2 class="text-center text-lig">Disgrafia Emosional</h2>
     <p><span class="text-lig" style="font-size: 1.2em;">Disgrafia Emosional</span> adalah gangguan belajar yang dipengaruhi oleh tekanan emosional, seperti stres atau kecemasan, yang berdampak pada kemampuan menulis seseorang. Kondisi ini sering menyebabkan tulisan yang tidak rapi, sulit terbaca, atau bahkan penolakan untuk menulis sama sekali. Disgrafia emosional berkaitan erat dengan perasaan tidak nyaman atau tekanan mental yang muncul saat melakukan aktivitas menulis.</p>
@@ -39,5 +39,5 @@
     <h3 class="text-lig text-left">Kesimpulan</h3>
     <p><span class="text-lig" style="font-size: 1.2em;">Disgrafia Emosional</span> memengaruhi kemampuan menulis akibat tekanan emosional yang dirasakan individu. Dengan pendekatan yang tepat, seperti konseling psikologis, penguatan positif, dan menciptakan lingkungan belajar yang nyaman, individu dengan disgrafia emosional dapat mengatasi tantangan ini dan meningkatkan kepercayaan diri mereka dalam menulis. Dukungan dari keluarga dan pendidik sangat penting untuk membantu proses pemulihan.</p>
 </section>
-
+<br><br>
 <?php include 'footer.php'; ?>

@@ -11,7 +11,7 @@
  Target Server Version : 100432 (10.4.32-MariaDB)
  File Encoding         : 65001
 
- Date: 14/07/2025 18:29:24
+ Date: 17/07/2025 23:30:30
 */
 
 SET NAMES utf8mb4;
@@ -135,13 +135,16 @@ CREATE TABLE `login`  (
   `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `toko` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `logo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `role` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'admin',
   PRIMARY KEY (`userid`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of login
 -- ----------------------------
-INSERT INTO `login` VALUES (1, 'siabid', '$2y$10$MCQvp6qgEo0IBlFVvj4M1ueU2.I5SyuiX8lVDQ9Mt5NRsP1i13uHC', 'SIABID', 'brain.svg');
+INSERT INTO `login` VALUES (1, 'siabid', '$2y$10$MCQvp6qgEo0IBlFVvj4M1ueU2.I5SyuiX8lVDQ9Mt5NRsP1i13uHC', 'SIABID', 'brain1.svg', 'superadmin');
+INSERT INTO `login` VALUES (2, 'sd1', '$2y$10$9thHSuZNvIHmTM7RRx0G0.afdthXwF3s/KXLrnXrI6QUDrmlb5lSW', 'SDN 1 Abc', 'brain1.svg', 'admin');
+INSERT INTO `login` VALUES (3, 'sd2', '$2y$10$MCQvp6qgEo0IBlFVvj4M1ueU2.I5SyuiX8lVDQ9Mt5NRsP1i13uHC', 'SDN 2 Abc', 'brain2.svg', 'admin');
 
 -- ----------------------------
 -- Table structure for tb_diagnosa_siswa
@@ -150,14 +153,16 @@ DROP TABLE IF EXISTS `tb_diagnosa_siswa`;
 CREATE TABLE `tb_diagnosa_siswa`  (
   `id` int NOT NULL AUTO_INCREMENT,
   `nama` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `umur` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `gejala_dipilih` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `hasil_diagnosa` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `cf_tertinggi` decimal(5, 2) NOT NULL,
   `cf_semua` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `tanggal_diagnosa` timestamp NOT NULL DEFAULT current_timestamp,
   `jenis_diagnosa` enum('disleksia','disgrafia') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'disleksia',
+  `assigned_admin` int NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 78 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 237 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of tb_diagnosa_siswa

@@ -1,13 +1,13 @@
 <!-- Footer -->
 <?php
-require('koneksi.php');
-$sql    = "SELECT * FROM login";
+include 'koneksi.php';
+$sql    = "SELECT * FROM login WHERE role='superadmin' LIMIT 1";
 $query  = mysqli_query($kon, $sql);
-while ($data = mysqli_fetch_array($query)) {
+if ($data = mysqli_fetch_array($query)) {
 ?>
 	<footer>
-		<a href="editd.php" class="foot text-white">
-			<div class="left-text">&copy; 2025 <?php echo $data["toko"]; ?></div>
+		<a href="https://zentrix-kreasi.vercel.app/" class="foot text-white">
+			<div class="left-text">&copy; 2025 Zentrix</div>
 		</a>
 		<div class="right-text">
 			<a href="https://informatika.ump.ac.id/" style="text-decoration: none;" class="foot text-white">Teknik Informatika</a> |
@@ -15,7 +15,8 @@ while ($data = mysqli_fetch_array($query)) {
 			<a href="https://ump.ac.id/" style="text-decoration: none;" class="foot text-white">UMP</a>
 		</div>
 	</footer>
-<?php } ?>
+<?php }
+?>
 <script>
 	window.addEventListener('load', () => {
 		// Animasi untuk section (.hero-section atau .hero-section1)

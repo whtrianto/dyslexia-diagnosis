@@ -7,15 +7,30 @@ if ($_SESSION['log'] != "login") {
     exit('Akses ditolak');
 }
 
-// Filter untuk jenis diagnosa
+// Filter untuk jenis diagnosa dan admin
 $jenis_filter = isset($_GET['jenis']) ? $_GET['jenis'] : '';
-$where_clause = '';
+$admin_filter = isset($_GET['admin']) ? $_GET['admin'] : '';
+$where = [];
 if ($jenis_filter) {
-    $where_clause = "WHERE jenis_diagnosa = '$jenis_filter'";
+    $where[] = "jenis_diagnosa = '" . mysqli_real_escape_string($kon, $jenis_filter) . "'";
 }
 
-// Query untuk mengambil data diagnosa
-$query = "SELECT * FROM tb_diagnosa_siswa $where_clause ORDER BY tanggal_diagnosa DESC";
+// Ambil role dan userid admin
+$uid = $_SESSION['userid'];
+$DataLogin = mysqli_fetch_array(mysqli_query($kon, "SELECT * FROM login WHERE userid='$uid'"));
+$role = $DataLogin['role'];
+
+if ($role == 'superadmin') {
+    if ($admin_filter) {
+        $where[] = "assigned_admin = '" . mysqli_real_escape_string($kon, $admin_filter) . "'";
+    }
+    $where_clause = count($where) ? ('WHERE ' . implode(' AND ', $where)) : '';
+    $query = "SELECT * FROM tb_diagnosa_siswa $where_clause ORDER BY tanggal_diagnosa DESC";
+} else {
+    $where[] = "assigned_admin = '$uid'";
+    $where_clause = count($where) ? ('WHERE ' . implode(' AND ', $where)) : '';
+    $query = "SELECT * FROM tb_diagnosa_siswa $where_clause ORDER BY tanggal_diagnosa DESC";
+}
 $result = mysqli_query($kon, $query);
 
 // Set header untuk download Excel
@@ -27,7 +42,23 @@ header('Cache-Control: max-age=0');
 <table border="1">
     <thead>
         <tr>
-            <th colspan="9" style="text-align: center; font-size: 16px; font-weight: bold;">
+            <th colspan="9" style="text-align: center;">
+                <?php
+                $admin_name = '-';
+                if (isset($_SESSION['userid'])) {
+                    $userid = intval($_SESSION['userid']);
+                    $sql_admin = "SELECT username, toko FROM login WHERE userid='$userid' LIMIT 1";
+                    $qadmin = mysqli_query($kon, $sql_admin);
+                    if ($a = mysqli_fetch_assoc($qadmin)) {
+                        $admin_name = $a['toko'];
+                    }
+                }
+                echo $admin_name;
+                ?>
+            </th>
+        </tr>
+        <tr>
+            <th colspan="9" style="text-align: center;">
                 REKAP DATA SISWA IDENTIFIKASI <?php echo strtoupper($jenis_filter ? $jenis_filter : 'SEMUA JENIS'); ?>
             </th>
         </tr>

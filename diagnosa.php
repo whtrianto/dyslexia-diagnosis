@@ -1,5 +1,9 @@
-<?php include 'header.php';
+<?php
 session_start();
+include 'header.php';
+include 'koneksi.php';
+// Ambil daftar admin
+$adminList = mysqli_query($kon, "SELECT userid, username, toko, role FROM login WHERE role IN ('admin','superadmin')");
 ?>
 <!-- Main Content -->
 <div class="container content">
@@ -14,8 +18,8 @@ session_start();
                             <h4 class="text-light text-center">Formulir Gejala Identifikasi Disleksia</h4>
                         </div>
                         <div class="card-body p-4" style="background: linear-gradient(to right top, rgba(174, 169, 153, 0.9), rgba(235, 232, 223, 0.9));">
-                            <?php include 'koneksi.php'; ?>
-                            <form method="POST" action="proses.php">
+                            <form id="formDiagnosa" method="POST" action="proses.php">
+                                <input type="hidden" name="submit" value="1">
                                 <div style="overflow-y: auto; height: 370px;">
                                     <div class="container">
                                         <div class="row align-items-center ">
@@ -52,10 +56,8 @@ session_start();
                                         Gejala yang dimiliki :
                                     </h5>
                                     <?php
-                                    // cek db gejala
                                     $qry = "SELECT * FROM tb_gejala";
                                     $data = mysqli_query($kon, $qry);
-                                    // agar berlaku berulangan sebanyak data yg ada di tb_gejala
                                     while ($d = mysqli_fetch_array($data)) {
                                     ?>
                                         <div class="form-check mb-3">
@@ -68,7 +70,17 @@ session_start();
                                     }
                                     ?>
                                 </div>
-                                <button type="submit" class="btn btn-block mt-4 custom-btn text-light" style="background-color:#908872; border: #333;" name="submit">SUBMIT</button>
+                                <div class="form-group mt-4">
+                                    <label for="assigned_admin"><b>Pilih Penyimpanan Data</b></label>
+                                    <select class="form-control" name="assigned_admin" id="assigned_admin" required>
+                                        <option value="">-- Pilih Admin --</option>
+                                        <?php mysqli_data_seek($adminList, 0);
+                                        while ($admin = mysqli_fetch_assoc($adminList)) { ?>
+                                            <option value="<?= $admin['userid'] ?>">[<?= ucfirst($admin['role']) ?>] <?= htmlspecialchars($admin['toko']) ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-block mt-4 custom-btn text-light" style="background-color:#908872; border: #333;">SUBMIT</button>
                             </form>
                         </div>
                     </div>
@@ -77,5 +89,6 @@ session_start();
         </div>
     </div>
 </div>
+<!-- Modal Pilih Admin & Script dihapus, pemilihan admin sekarang di bawah form -->
 <br><br>
 <?php include 'footer.php'; ?>
